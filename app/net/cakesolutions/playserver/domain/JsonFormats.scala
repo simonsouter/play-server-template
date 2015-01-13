@@ -1,19 +1,11 @@
-package net.cakesolutions.playserver.domain.user
+package net.cakesolutions.playserver.domain
 
 import play.api.libs.json._
 import reactivemongo.bson.BSONObjectID
 
 import scala.util.Try
 
-/**
- * Created by simonsouter on 01/11/14.
- */
 object JsonFormats {
-  import play.api.libs.json.Json
-
-  // Generates Writes and Reads for User thanks to Json Macros
-  implicit val userFormat = Json.format [UserModel]
-
   implicit object BSONObjectIDFormat extends Format[BSONObjectID] {
     def writes(objectId: BSONObjectID): JsValue = JsString(objectId.toString())
 
