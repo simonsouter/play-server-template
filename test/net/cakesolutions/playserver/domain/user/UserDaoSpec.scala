@@ -1,6 +1,6 @@
 package net.cakesolutions.playserver.domain.user
 
-import org.scalatest
+import net.cakesolutions.playserver.scalatest.UnitSpec
 import org.scalatest.concurrent.ScalaFutures
 import play.api.Logger
 import reactivemongo.api.MongoDriver
@@ -8,7 +8,6 @@ import reactivemongo.api.MongoDriver
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.util.{Failure, Success}
-import org.scalatest.UnitSpec
 
 /**
  *
