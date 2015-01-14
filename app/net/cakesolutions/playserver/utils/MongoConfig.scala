@@ -9,6 +9,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 /**
  * Provides configuration for MongoDb connection, should only be mixed-in once as pool management is done here.
  */
+//TODO remove
 trait MongoConfig {
 
   val logger: Logger = Logger(this.getClass)
