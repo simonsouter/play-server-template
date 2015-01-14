@@ -3,7 +3,12 @@
 # ~~~~
 
 # Home page
-GET     /                           net.cakesolutions.playserver.controllers.Application.index
+GET        /                    net.cakesolutions.playserver.controllers.Application.index
+
+POST        /place              net.cakesolutions.playserver.controllers.PlaceController.create
+#GET        /place              net.cakesolutions.playserver.controllers.PlaceController.create
+
+
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.at(path="/public", file)
+GET        /assets/*file        controllers.Assets.at(path="/public", file)
