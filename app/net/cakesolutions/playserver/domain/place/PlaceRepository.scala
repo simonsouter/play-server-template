@@ -1,6 +1,5 @@
 package net.cakesolutions.playserver.domain.place
 
-import net.cakesolutions.playserver.utils.MongoContext
 import play.api.Logger
 import play.api.libs.json.Json
 import play.modules.reactivemongo.ReactiveMongoPlugin
