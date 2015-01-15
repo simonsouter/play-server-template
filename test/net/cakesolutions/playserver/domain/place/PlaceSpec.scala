@@ -15,7 +15,7 @@ class PlaceSpec extends UnitSpec {
 
   val residentJson = """{"name" : "Fiver","age" : 4}"""
 
-  val placeJson = s"""{"_id":"54b66e514c0a73530095cfdd","name" : "Watership Down","location" : $locationJson,"residents" : [ $residentJson, $residentJson ]}"""
+  val placeJson = s"""{"id":"54b66e514c0a73530095cfdd","name" : "Watership Down","location" : $locationJson,"residents" : [ $residentJson, $residentJson ]}"""
 
   "A location entity" should "read" in {
     val ast: JsValue = Json.parse(locationJson)
