@@ -1,14 +1,11 @@
 package net.cakesolutions.playserver.domain.place
 
 import play.api.libs.json._
-import reactivemongo.bson.BSONObjectID
-import play.modules.reactivemongo.json.BSONFormats._
+import play.modules.reactivemongo.json.BSONFormats.PartialFormat
+import reactivemongo.bson.{BSONValue, BSONObjectID}
 
-import scala.util.{Failure, Success}
+import scala.util.{Try, Failure, Success}
 
-/**
- * Created by user on 13/01/15.
- */
 case class Place(_id: Option[BSONObjectID] = Some(BSONObjectID.generate),
                  name: String, location: Location, residents: Seq[Resident])
 
@@ -22,20 +19,21 @@ object Place {
   implicit val residentFormat = Json.format[Resident]
   implicit val placeFormat = Json.format[Place]
 
-  implicit val objectIdFormatter = new Format[Option[BSONObjectID]] {
-    implicit def reads(json: JsValue): JsResult[Option[BSONObjectID]] =
-      json match {
-        case s: JsString => BSONObjectID.parse(s.toString) match {
-          case Success(v) => JsSuccess(Some(v))
-          case Failure(e) => JsError("notvalid.objectid.value")
-        }
-        case _ => JsError("notvalid.objectid")
-      }
+  /**
+   * Converts between _id Json field and BSONObjectID required by Reactive Mongo
+   * TOOD move to separate class
+   */
+  implicit object BSONObjectIDFormat extends PartialFormat[BSONObjectID] {
+    def partialReads: PartialFunction[JsValue, JsResult[BSONObjectID]] = {
 
-    implicit def writes(o: Option[BSONObjectID]): JsValue =
-      o match {
-        case Some(b) => JsString(b.stringify)
-        case _ => JsNull
-      }
+      /* Id sourced from mongo via reactive mongo e.g. {"_id:{"oid":xxx} */
+      case JsObject(("$oid", JsString(v)) +: Nil) => JsSuccess(BSONObjectID(v))
+
+      /* Id sourced from API e.g. {"_id":"xxx"}*/
+      case JsString(v) => JsSuccess(BSONObjectID(v))
+    }
+    val partialWrites: PartialFunction[BSONValue, JsValue] = {
+      case oid: BSONObjectID => JsString(oid.stringify)
+    }
   }
 }

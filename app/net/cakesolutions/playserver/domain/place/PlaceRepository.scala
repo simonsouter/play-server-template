@@ -3,9 +3,9 @@ package net.cakesolutions.playserver.domain.place
 import play.api.Logger
 import play.api.libs.json.Json
 import play.modules.reactivemongo.ReactiveMongoPlugin
-import play.modules.reactivemongo.json.BSONFormats._
 import reactivemongo.bson.BSONObjectID
 import reactivemongo.extensions.json.dao.JsonDao
+import net.cakesolutions.playserver.domain.place.Place._
 
 //TODO pass implicitly
 import scala.concurrent.ExecutionContext.Implicits.global

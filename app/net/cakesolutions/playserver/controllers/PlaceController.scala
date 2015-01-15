@@ -81,7 +81,7 @@ object PlaceController extends Controller {
 
   private def validIdPresent(json: JsValue): Boolean = {
     try {
-      val oid = (json \ "_id" \ "$oid").as[String]
+      val oid = (json \ "_id").as[String]
       BSONObjectID(oid)
       true
     } catch {
