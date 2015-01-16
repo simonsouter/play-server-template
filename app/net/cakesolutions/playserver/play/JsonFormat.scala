@@ -7,15 +7,11 @@ import reactivemongo.bson.{BSONValue, BSONObjectID}
 
 import scala.util.{Failure, Success}
 
-/**
- * Created by user on 15/01/15.
- */
 object JsonFormat {
   val logger: Logger = Logger(this.getClass)
 
   /**
    * Converts between _id Json field and BSONObjectID required by Reactive Mongo
-   * TOOD move to separate class
    */
   implicit object BSONObjectIDFormat extends PartialFormat[BSONObjectID] {
     def partialReads: PartialFunction[JsValue, JsResult[BSONObjectID]] = {

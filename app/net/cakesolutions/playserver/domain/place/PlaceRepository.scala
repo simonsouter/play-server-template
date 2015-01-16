@@ -1,5 +1,7 @@
 package net.cakesolutions.playserver.domain.place
 
+import javax.inject.Singleton
+
 import play.api.Logger
 import play.api.libs.json.Json
 import play.modules.reactivemongo.ReactiveMongoPlugin
@@ -12,7 +14,8 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import play.api.Play.current
 import scala.concurrent.Future
 
-object PlaceRepository extends JsonDao[Place, BSONObjectID](ReactiveMongoPlugin.db, "place") {
+@Singleton
+class PlaceRepository extends JsonDao[Place, BSONObjectID](ReactiveMongoPlugin.db, "place") {
 
   val logger: Logger = Logger(this.getClass)
 

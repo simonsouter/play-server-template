@@ -5,10 +5,10 @@
 # Home page
 GET         /                    net.cakesolutions.playserver.controllers.Application.index
 
-POST        /place               net.cakesolutions.playserver.controllers.PlaceController.create
-PUT         /place               net.cakesolutions.playserver.controllers.PlaceController.update
-GET         /place/:id           net.cakesolutions.playserver.controllers.PlaceController.findById(id)
-DELETE      /place/:id           net.cakesolutions.playserver.controllers.PlaceController.delete(id)
+POST        /place               @net.cakesolutions.playserver.controllers.PlaceController.create
+PUT         /place               @net.cakesolutions.playserver.controllers.PlaceController.update
+GET         /place/:id           @net.cakesolutions.playserver.controllers.PlaceController.findById(id)
+DELETE      /place/:id           @net.cakesolutions.playserver.controllers.PlaceController.delete(id)
 
 
 
