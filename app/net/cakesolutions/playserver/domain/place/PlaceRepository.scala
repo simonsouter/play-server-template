@@ -1,21 +1,20 @@
 package net.cakesolutions.playserver.domain.place
 
-import javax.inject.Singleton
+import javax.inject.{Inject, Singleton}
 
+import net.cakesolutions.playserver.play.JsonFormat._
 import play.api.Logger
 import play.api.libs.json.Json
-import play.modules.reactivemongo.ReactiveMongoPlugin
+import reactivemongo.api.DB
 import reactivemongo.bson.BSONObjectID
 import reactivemongo.extensions.json.dao.JsonDao
-import net.cakesolutions.playserver.play.JsonFormat._
 
 //TODO pass implicitly
 import scala.concurrent.ExecutionContext.Implicits.global
-import play.api.Play.current
 import scala.concurrent.Future
 
 @Singleton
-class PlaceRepository extends JsonDao[Place, BSONObjectID](ReactiveMongoPlugin.db, "place") {
+class PlaceRepository @Inject() (db:DB) extends JsonDao[Place, BSONObjectID](db, "place") {
 
   val logger: Logger = Logger(this.getClass)
 

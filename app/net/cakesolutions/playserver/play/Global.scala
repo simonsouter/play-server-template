@@ -1,16 +1,15 @@
 package net.cakesolutions.playserver.play
 
-import com.google.inject.{Guice, AbstractModule}
+import com.google.inject.Guice
 import net.cakesolutions.playserver.guice.PlayModule
 import play.api._
 import play.api.libs.json.Json
-import play.api.mvc._
 import play.api.mvc.Results._
+import play.api.mvc._
 
 import scala.concurrent.Future
 
 object Global extends GlobalSettings {
-
 
   /**
    * Bind types such that whenever TextGenerator is required, an instance of WelcomeTextGenerator will be used.

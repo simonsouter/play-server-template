@@ -1,6 +1,6 @@
 package net.cakesolutions.playserver.controllers
 
-import javax.inject.Singleton
+import javax.inject.{Inject, Singleton}
 
 import net.cakesolutions.playserver.domain.place.{Place, PlaceRepository}
 import play.api.Logger
@@ -12,7 +12,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 @Singleton
-class PlaceController(placeRepository: PlaceRepository) extends Controller {
+class PlaceController @Inject() (placeRepository: PlaceRepository) extends Controller {
 
   val logger: Logger = Logger(this.getClass)
 
