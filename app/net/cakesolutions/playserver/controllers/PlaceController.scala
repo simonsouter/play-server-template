@@ -38,7 +38,7 @@ object PlaceController extends Controller {
       },
       place => {
         PlaceRepository.save(place).map(lastError =>
-          Created(Json.obj("status" -> "OK", "message" -> s"Place [${place.name}] saved")))
+          Created(Json.obj("status" -> "OK", "message" -> s"Place [${place.name}] saved]")))
       }
     )
   }
