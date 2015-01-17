@@ -1,5 +1,7 @@
 package net.cakesolutions.playserver.controllers
 
+import javax.inject.Singleton
+
 import net.cakesolutions.playserver.domain.place.{Place, PlaceRepository}
 import play.api.Logger
 import play.api.libs.json.{JsError, JsValue, Json}
@@ -9,12 +11,13 @@ import reactivemongo.bson.BSONObjectID
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-object PlaceController extends Controller {
+@Singleton
+class PlaceController(placeRepository: PlaceRepository) extends Controller {
 
   val logger: Logger = Logger(this.getClass)
 
   def findById(id: String) = Action.async {
-    val future = PlaceRepository.findById(BSONObjectID(id))
+    val future = placeRepository.findById(BSONObjectID(id))
 
     future.map(
       _ match {
@@ -37,8 +40,8 @@ object PlaceController extends Controller {
         }
       },
       place => {
-        PlaceRepository.save(place).map(lastError =>
-          Created(Json.obj("status" -> "OK", "message" -> s"Place [${place.name}] saved]")))
+        placeRepository.save(place).map(lastError =>
+          Created(Json.obj("status" -> "OK", "message" -> s"Place [${place.name}] saved")))
       }
     )
   }
@@ -60,7 +63,7 @@ object PlaceController extends Controller {
           }
         },
         place => {
-          PlaceRepository.save(place).map(lastError =>
+          placeRepository.save(place).map(lastError =>
             Created(Json.obj("status" -> "OK", "message" -> s"Place [${place.name}] saved")))
         }
       )
@@ -68,7 +71,7 @@ object PlaceController extends Controller {
   }
 
   def delete(id: String) = Action.async {
-    val future = PlaceRepository.removeById(BSONObjectID(id))
+    val future = placeRepository.removeById(BSONObjectID(id))
 
     future.map(
       _ match {
@@ -81,7 +84,7 @@ object PlaceController extends Controller {
 
   private def validIdPresent(json: JsValue): Boolean = {
     try {
-      val oid = (json \ "_id" \ "$oid").as[String]
+      val oid = (json \ "_id").as[String]
       BSONObjectID(oid)
       true
     } catch {
@@ -89,6 +92,5 @@ object PlaceController extends Controller {
         logger.error(s"Failed to Parse objectId: ${e.getMessage}")
         false;
     }
-
   }
 }

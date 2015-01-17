@@ -14,15 +14,36 @@ class PlaceRepositorySpec extends UnitSpec with ScalaFutures {
   val testPlace = Place(name = "Test", location = Location(0.2, 0.1),
     residents = Seq(Resident("Res", 21, Some("Admin")), Resident("Res", 21, Some("Admin"))))
 
-  "PlaceRepository" should "Create perform CRUD on Place Document" in {
+  "PlaceRepository" should "Create Place Document" in {
     val a = Await.result(PlaceRepository.save(testPlace), FiniteDuration(5, "seconds"))
     if (!a.ok) {
       fail("Failed to save Place", a.getCause)
     }
   }
 
-  it should "Find Place Document and delete" in {
-    val maybePlace = Await.result(PlaceRepository.findByName("Test"), FiniteDuration(5, "seconds"))
+//  it should "Find and Update Place" in {
+//
+//    val future = for {
+//      place <- placeRepository.findByName("Test")
+//      updatedPlace = place.get.copy(name = "New")
+//      future <- placeRepository.save(updatedPlace)
+//      newPlace <- placeRepository.findByName("New")
+//    } yield {
+//      newPlace
+//    }
+//
+//    whenReady(future) {
+//      _ match {
+//        case Some(place) =>
+//          assert(place.name equals "New")
+//        case None =>
+//          fail("Failed to save Place")
+//      }
+//    }
+//  }
+
+  it should "Find Place Document by id and delete" in {
+    val maybePlace = Await.result(PlaceRepository.findById(testPlace._id.get), FiniteDuration(5, "seconds"))
     maybePlace match {
       case Some(place) =>
         assert(place.name equals "Test")
@@ -32,27 +53,5 @@ class PlaceRepositorySpec extends UnitSpec with ScalaFutures {
       case None =>
         fail("Failed to find Place")
     }
-
   }
-
-  //  it should "Find and Update Place" in {
-  //
-  //    val future = for {
-  //      place <- placeRepository.findByName("Test")
-  //      updatedPlace = place.get.copy(name = "New")
-  //      future <- placeRepository.save(updatedPlace)
-  //      newPlace <- placeRepository.findByName("New")
-  //    } yield {
-  //      newPlace
-  //    }
-  //
-  //    whenReady(future) {
-  //      _ match {
-  //        case Some(place) =>
-  //          assert(place.name equals "New")
-  //        case None =>
-  //          fail("Failed to save Place")
-  //      }
-  //    }
-  //  }
 }
