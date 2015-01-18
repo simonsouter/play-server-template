@@ -5,18 +5,18 @@ import javax.inject.Singleton
 import com.google.inject.{AbstractModule, Provides}
 import com.typesafe.config.{Config, ConfigFactory}
 import net.cakesolutions.playserver.mongo.MongoConnector
+import net.codingwell.scalaguice.ScalaModule
 import play.api.Logger
 import reactivemongo.api.DB
 
 /**
  * Created by user on 16/01/15.
  */
-class PlayModule extends AbstractModule {
+class PlayModule extends AbstractModule with ScalaModule {
   val logger: Logger = Logger(this.getClass)
 
   override def configure(): Unit = {
-    //bindings
-
+//    bind[Service].to[ServiceImpl].in[Singleton]
   }
 
   @Provides
